@@ -1,6 +1,7 @@
 package com.getir.readingisgood.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import com.getir.readingisgood.entity.Customer;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-public interface CustomerRepository extends CrudRepository<> {
+public interface CustomerRepository extends PagingAndSortingRepository<Customer, Long> {
 }

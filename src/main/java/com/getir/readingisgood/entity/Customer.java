@@ -8,9 +8,10 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
-@Table(name = "customer")
+//@Table(name = "customer")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -36,6 +37,9 @@ public class Customer implements Serializable {
 
     @CreationTimestamp
     private LocalDateTime createDateTime;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Orders> orders;
 
     @Override
     public String toString() {

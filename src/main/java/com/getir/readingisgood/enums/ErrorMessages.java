@@ -3,6 +3,8 @@ package com.getir.readingisgood.enums;
 import org.springframework.http.HttpStatus;
 
 public enum ErrorMessages {
+
+    STOCK_IS_NOT_ENOUGH("Stock is not enough", HttpStatus.BAD_REQUEST),
     CUSTOMER_COULD_NOT_FOUND("Customer could not be found.", HttpStatus.BAD_REQUEST),
     BOOK_COULD_NOT_FOUND("Book could not be found.", HttpStatus.BAD_REQUEST),
     BOOK_ALREADY_EXISTS("Book already exists.", HttpStatus.BAD_REQUEST),

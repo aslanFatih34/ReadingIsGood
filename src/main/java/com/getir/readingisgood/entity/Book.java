@@ -9,9 +9,10 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
-@Table(name = "book")
+//@Table(name = "book")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -19,10 +20,9 @@ public class Book implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column(nullable = false)
     private Long id;
 
-    @Column(name = "book_id", nullable = false, unique = true)
+    @Column(name = "book_uuid", nullable = false, unique = true)
     private String bookId;
 
     @Column(name = "name", nullable = false, unique = true)
@@ -39,6 +39,9 @@ public class Book implements Serializable {
 
     @CreationTimestamp
     private LocalDateTime createDateTime;
+
+    @OneToMany(mappedBy = "book")
+    private List<Orders> orders;
 
     @Override
     public String toString() {

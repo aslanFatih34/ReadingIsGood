@@ -11,3 +11,9 @@ spring:
   h2:
     console:
       enabled: true
+app:
+  security:
+    user:
+      name: fatih
+      password: aslan
+      roles: admin

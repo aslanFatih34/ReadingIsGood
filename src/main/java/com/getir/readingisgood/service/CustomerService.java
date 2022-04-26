@@ -13,6 +13,4 @@ public interface CustomerService {
 
     List<CustomerDto> getCustomers(int page, int limit);
 
-    CustomerDto findByEmail(String email);
-
 }

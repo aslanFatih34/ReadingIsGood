@@ -35,7 +35,7 @@ public class CustomerController {
     }
 
     @GetMapping(path = "/{customerId}")
-    @Operation(summary = "Get customer by given id")
+    @Operation(summary = "Get customer by given uuid")
     public ResponseEntity<CustomerDto> getCustomerByCustomerId(@PathVariable String customerId) {
         CustomerDto customerDto = customerService.getCustomer(customerId);
         return ResponseEntity.status(HttpStatus.OK).body(customerDto);

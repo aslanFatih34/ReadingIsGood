@@ -7,6 +7,8 @@ public enum ErrorMessages {
     STOCK_IS_NOT_ENOUGH("Stock is not enough", HttpStatus.BAD_REQUEST),
     CUSTOMER_COULD_NOT_FOUND("Customer could not be found.", HttpStatus.BAD_REQUEST),
     BOOK_COULD_NOT_FOUND("Book could not be found.", HttpStatus.BAD_REQUEST),
+    ORDER_COULD_NOT_FOUND("Order could not be found.", HttpStatus.BAD_REQUEST),
+
     BOOK_ALREADY_EXISTS("Book already exists.", HttpStatus.BAD_REQUEST),
 
     EMAIL_ALREADY_EXISTS("Email already exists.", HttpStatus.BAD_REQUEST);

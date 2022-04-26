@@ -3,7 +3,6 @@ package com.getir.readingisgood.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -13,7 +12,6 @@ import java.util.List;
 @Table(name = "book")
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 public class Book extends BaseEntity {
 
@@ -38,4 +36,16 @@ public class Book extends BaseEntity {
 
     @OneToMany(mappedBy = "book")
     private List<Order> orders;
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", bookId='" + bookId + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", stock=" + stock +
+                '}';
+    }
 }

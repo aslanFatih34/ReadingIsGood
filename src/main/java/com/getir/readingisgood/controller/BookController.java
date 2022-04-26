@@ -35,7 +35,7 @@ public class BookController {
     }
 
     @GetMapping(path = "/{bookId}")
-    @Operation(summary = "Get book by given id")
+    @Operation(summary = "Get book by given uuid")
     public ResponseEntity<BookDto> getBookByBookId(@PathVariable String bookId) {
         BookDto bookDto = bookService.getBookByBookId(bookId);
         return ResponseEntity.status(HttpStatus.OK).body(bookDto);

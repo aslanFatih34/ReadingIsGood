@@ -4,7 +4,6 @@ import com.getir.readingisgood.enums.OrderStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -13,7 +12,6 @@ import java.math.BigDecimal;
 @Table(name = "orders")
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 public class Order extends BaseEntity {
 
@@ -24,6 +22,8 @@ public class Order extends BaseEntity {
     @Version
     private int version;
 
+    @Column(name = "order_uuid", nullable = false, unique = true)
+    private String orderId;
     @ManyToOne()
     @JoinColumn(name = "customer_id")
     private Customer customer;
@@ -40,4 +40,16 @@ public class Order extends BaseEntity {
 
     @Column(name = "price")
     private BigDecimal price;
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", version=" + version +
+                ", orderId='" + orderId + '\'' +
+                ", status=" + status +
+                ", quantity=" + quantity +
+                ", price=" + price +
+                '}';
+    }
 }

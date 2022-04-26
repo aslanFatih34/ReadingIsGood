@@ -1,7 +1,6 @@
 package com.getir.readingisgood.config;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -23,12 +22,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${app.security.user.roles}")
     private String roles;
 
-    @Autowired
-    BCryptPasswordEncoder passwordEncoder;
+    private final BCryptPasswordEncoder passwordEncoder;
+
+    public SecurityConfig(BCryptPasswordEncoder passwordEncoder) {
+        super();
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser(userName).password(passwordEncoder.encode(password)).roles(roles);
+        auth
+                .inMemoryAuthentication()
+                .withUser(userName)
+                .password(passwordEncoder.encode(password))
+                .roles(roles);
     }
 
     @Override

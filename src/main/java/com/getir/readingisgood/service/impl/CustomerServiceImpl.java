@@ -82,18 +82,4 @@ public class CustomerServiceImpl implements CustomerService {
 
         return customerDtos;
     }
-
-    @Override
-    public CustomerDto findByEmail(String email) {
-        Optional<Customer> customer = customerRepository.findByEmail(email);
-
-        if (customer.isPresent()) {
-            CustomerDto customerDto = new CustomerDto();
-            BeanUtils.copyProperties(customer.get(), customerDto);
-
-            return customerDto;
-        } else {
-            return new CustomerDto();
-        }
-    }
 }

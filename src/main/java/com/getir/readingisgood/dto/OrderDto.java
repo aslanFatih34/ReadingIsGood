@@ -13,6 +13,7 @@ import lombok.ToString;
 public class OrderDto {
 
     private String customerName;
+    private String orderId;
     private String bookName;
     private String address;
 

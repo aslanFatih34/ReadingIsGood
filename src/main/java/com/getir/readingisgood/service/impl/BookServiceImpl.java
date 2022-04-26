@@ -87,25 +87,4 @@ public class BookServiceImpl implements BookService {
         logger.info("getBooks are ended.Size :" + bookDtos.size());
         return bookDtos;
     }
-
-    @Override
-    public BookDto findByName(String name) {
-        logger.info("findByName is started.Name " + name);
-        Optional<Book> book = bookRepository.findByName(name);
-
-        if (book.isPresent()) {
-            throw new ApiException(ErrorMessages.BOOK_COULD_NOT_FOUND);
-        } else {
-            BookDto bookDto = new BookDto();
-            BeanUtils.copyProperties(book, bookDto);
-
-            logger.info("findByName is ended." + book);
-            return bookDto;
-        }
-    }
-
-    @Override
-    public void updateStock(int stock, String name) {
-
-    }
 }

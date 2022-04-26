@@ -11,8 +11,4 @@ public interface BookService {
     BookDto getBookByBookId(String bookId);
 
     List<BookDto> getBooks(int page, int limit);
-
-    BookDto findByName(String name);
-
-    void updateStock(int stock, String name);
 }

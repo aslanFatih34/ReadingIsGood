@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -34,23 +34,29 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public String createOrder(String customerId, OrderCreateRequest orderCreateRequest) {
-        Customer customer = customerRepository.findByCustomerId(customerId);
-        if (Objects.isNull(customer))
+        Optional<Customer> customer = customerRepository.findByCustomerId(customerId);
+        Customer customerPresent;
+        Book bookPresent;
+        Order order;
+        if (customer.isEmpty()) {
             throw new ApiException(ErrorMessages.CUSTOMER_COULD_NOT_FOUND);
-
-        Book book = bookRepository.findByName(orderCreateRequest.getBookName());
-        if (Objects.isNull(book))
+        } else {
+            customerPresent = customer.get();
+        }
+        Optional<Book> book = bookRepository.findByName(orderCreateRequest.getBookName());
+        if (book.isEmpty()) {
             throw new ApiException(ErrorMessages.BOOK_COULD_NOT_FOUND);
-
-        Order order = new Order();
-        order.setBook(book);
-        order.setCustomer(customer);
-        order.setQuantity(orderCreateRequest.getQuantity());
-
-        boolean isStockEnough = book.getStock() >= orderCreateRequest.getQuantity();
+        } else {
+            bookPresent = book.get();
+            order = new Order();
+            order.setBook(bookPresent);
+            order.setCustomer(customerPresent);
+            order.setQuantity(orderCreateRequest.getQuantity());
+        }
+        boolean isStockEnough = bookPresent.getStock() >= orderCreateRequest.getQuantity();
 
         if (isStockEnough)
-            updateStock(orderCreateRequest, book, order);
+            updateStock(orderCreateRequest, bookPresent, order);
         else
             order.setStatus(OrderStatus.FAIL);
 

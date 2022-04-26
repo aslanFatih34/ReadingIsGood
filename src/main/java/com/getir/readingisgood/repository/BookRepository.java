@@ -10,14 +10,15 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.LockModeType;
+import java.util.Optional;
 
 @Repository
 public interface BookRepository extends PagingAndSortingRepository<Book, Long> {
 
-    Book findByBookId(String bookId);
+    Optional<Book> findByBookId(String bookId);
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
-    Book findByName(String name);
+    Optional<Book> findByName(String name);
 
     @Transactional
     @Modifying

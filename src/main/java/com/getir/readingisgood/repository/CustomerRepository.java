@@ -4,9 +4,11 @@ import com.getir.readingisgood.entity.Customer;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface CustomerRepository extends PagingAndSortingRepository<Customer, Long> {
-    Customer findByCustomerId(String customerId);
+    Optional<Customer> findByCustomerId(String customerId);
 
-    Customer findByEmail(String email);
+    Optional<Customer> findByEmail(String email);
 }

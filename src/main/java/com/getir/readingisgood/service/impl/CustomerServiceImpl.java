@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -33,35 +33,37 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDto createCustomer(CustomerCreateRequest customerCreateRequest) {
-        Customer customer = customerRepository.findByEmail(customerCreateRequest.getEmail());
-        if (Objects.nonNull(customer))
+        Optional<Customer> customer = customerRepository.findByEmail(customerCreateRequest.getEmail());
+        if (customer.isPresent()) {
             throw new ApiException(ErrorMessages.EMAIL_ALREADY_EXISTS);
+        } else {
+            Customer newCustomer = new Customer();
+            BeanUtils.copyProperties(customerCreateRequest, newCustomer);
 
-        Customer newCustomer = new Customer();
-        BeanUtils.copyProperties(customerCreateRequest, newCustomer);
+            newCustomer.setCustomerId(UUID.randomUUID().toString());
+            newCustomer.setEncryptedPassword(passwordEncoder.encode(customerCreateRequest.getPassword()));
 
-        newCustomer.setCustomerId(UUID.randomUUID().toString());
-        newCustomer.setEncryptedPassword(passwordEncoder.encode(customerCreateRequest.getPassword()));
+            Customer storedCustomer = customerRepository.save(newCustomer);
 
-        Customer storedCustomer = customerRepository.save(newCustomer);
+            CustomerDto customerDto = new CustomerDto();
+            BeanUtils.copyProperties(storedCustomer, customerDto);
 
-        CustomerDto customerDto = new CustomerDto();
-        BeanUtils.copyProperties(storedCustomer, customerDto);
-
-        return customerDto;
+            return customerDto;
+        }
     }
 
     @Override
     public CustomerDto getCustomer(String customerId) {
-        Customer customer = customerRepository.findByCustomerId(customerId);
+        Optional<Customer> customer = customerRepository.findByCustomerId(customerId);
 
-        if (Objects.isNull(customer))
+        if (customer.isEmpty()) {
             throw new ApiException(ErrorMessages.CUSTOMER_COULD_NOT_FOUND);
+        } else {
+            CustomerDto customerDto = new CustomerDto();
+            BeanUtils.copyProperties(customer.get(), customerDto);
 
-        CustomerDto customerDto = new CustomerDto();
-        BeanUtils.copyProperties(customer, customerDto);
-
-        return customerDto;
+            return customerDto;
+        }
     }
 
     @Override
@@ -83,11 +85,15 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDto findByEmail(String email) {
-        Customer customer = customerRepository.findByEmail(email);
+        Optional<Customer> customer = customerRepository.findByEmail(email);
 
-        CustomerDto customerDto = new CustomerDto();
-        BeanUtils.copyProperties(customer, customerDto);
+        if (customer.isPresent()) {
+            CustomerDto customerDto = new CustomerDto();
+            BeanUtils.copyProperties(customer.get(), customerDto);
 
-        return customerDto;
+            return customerDto;
+        } else {
+            return new CustomerDto();
+        }
     }
 }

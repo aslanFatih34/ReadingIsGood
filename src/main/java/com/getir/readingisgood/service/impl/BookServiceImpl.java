@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -33,38 +33,40 @@ public class BookServiceImpl implements BookService {
     public BookDto createBook(BookCreateRequest bookCreateRequest) {
         logger.info("createProduct is started." + bookCreateRequest);
 
-        Book book = bookRepository.findByName(bookCreateRequest.getName());
+        Optional<Book> book = bookRepository.findByName(bookCreateRequest.getName());
 
-        if (Objects.nonNull(book))
+        if (book.isPresent()) {
             throw new ApiException(ErrorMessages.BOOK_ALREADY_EXISTS);
+        } else {
+            Book newBook = new Book();
+            BeanUtils.copyProperties(bookCreateRequest, newBook);
 
-        Book newBook = new Book();
-        BeanUtils.copyProperties(bookCreateRequest, newBook);
+            newBook.setBookId(UUID.randomUUID().toString());
+            Book storedBook = bookRepository.save(newBook);
 
-        newBook.setBookId(UUID.randomUUID().toString());
-        Book storedBook = bookRepository.save(newBook);
+            BookDto bookDto = new BookDto();
+            BeanUtils.copyProperties(storedBook, bookDto);
+            logger.info("createProduct is ended." + storedBook);
 
-        BookDto bookDto = new BookDto();
-        BeanUtils.copyProperties(storedBook, bookDto);
-        logger.info("createProduct is ended." + storedBook);
-
-        return bookDto;
+            return bookDto;
+        }
     }
 
     @Override
     public BookDto getBookByBookId(String bookId) {
         logger.info("getBookByBookId is started.BookId " + bookId);
 
-        Book book = bookRepository.findByBookId(bookId);
+        Optional<Book> book = bookRepository.findByBookId(bookId);
 
-        if (Objects.isNull(book))
+        if (book.isEmpty()) {
             throw new ApiException(ErrorMessages.BOOK_COULD_NOT_FOUND);
+        } else {
+            BookDto bookDto = new BookDto();
+            BeanUtils.copyProperties(book.get(), bookDto);
 
-        BookDto bookDto = new BookDto();
-        BeanUtils.copyProperties(book, bookDto);
-
-        logger.info("getBookByBookId is ended." + book);
-        return bookDto;
+            logger.info("getBookByBookId is ended." + book);
+            return bookDto;
+        }
     }
 
     @Override
@@ -89,16 +91,17 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookDto findByName(String name) {
         logger.info("findByName is started.Name " + name);
-        Book book = bookRepository.findByName(name);
+        Optional<Book> book = bookRepository.findByName(name);
 
-        if (Objects.isNull(book))
+        if (book.isPresent()) {
             throw new ApiException(ErrorMessages.BOOK_COULD_NOT_FOUND);
+        } else {
+            BookDto bookDto = new BookDto();
+            BeanUtils.copyProperties(book, bookDto);
 
-        BookDto bookDto = new BookDto();
-        BeanUtils.copyProperties(book, bookDto);
-
-        logger.info("findByName is ended." + book);
-        return bookDto;
+            logger.info("findByName is ended." + book);
+            return bookDto;
+        }
     }
 
     @Override

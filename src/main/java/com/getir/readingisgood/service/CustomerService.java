@@ -1,7 +1,7 @@
 package com.getir.readingisgood.service;
 
 import com.getir.readingisgood.dto.CustomerDto;
-import com.getir.readingisgood.request.CustomerCreateRequest;
+import com.getir.readingisgood.model.request.CustomerCreateRequest;
 
 import java.util.List;
 

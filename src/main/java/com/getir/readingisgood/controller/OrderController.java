@@ -1,8 +1,8 @@
 package com.getir.readingisgood.controller;
 
-import com.getir.readingisgood.request.OrderCreateRequest;
+import com.getir.readingisgood.model.request.OrderCreateRequest;
 import com.getir.readingisgood.service.OrderService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,14 +11,10 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/order")
+@RequiredArgsConstructor
 public class OrderController {
 
-    OrderService orderService;
-
-    @Autowired
-    public OrderController(OrderService orderService) {
-        this.orderService = orderService;
-    }
+    private final OrderService orderService;
 
     @PostMapping(path = "/{customerId}")
     public ResponseEntity<String> createCustomer(

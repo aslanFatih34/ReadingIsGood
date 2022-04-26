@@ -3,19 +3,18 @@ package com.getir.readingisgood.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
+import lombok.ToString;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-//@Table(name = "customer")
+@Table(name = "customer")
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
-public class Customer implements Serializable {
+public class Customer extends BaseEntity {
 
     @Id
     @GeneratedValue
@@ -35,19 +34,6 @@ public class Customer implements Serializable {
     @Column(nullable = false)
     private String address;
 
-    @CreationTimestamp
-    private LocalDateTime createDateTime;
-
     @OneToMany(mappedBy = "customer")
-    private List<Orders> orders;
-
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "customerId='" + customerId + '\'' +
-                ", name='" + name + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                '}';
-    }
+    private List<Order> orders;
 }

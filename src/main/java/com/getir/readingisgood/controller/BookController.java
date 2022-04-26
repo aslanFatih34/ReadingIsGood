@@ -1,9 +1,9 @@
 package com.getir.readingisgood.controller;
 
 import com.getir.readingisgood.dto.BookDto;
-import com.getir.readingisgood.request.BookCreateRequest;
+import com.getir.readingisgood.model.request.BookCreateRequest;
 import com.getir.readingisgood.service.BookService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,14 +13,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/book")
+@RequiredArgsConstructor
 public class BookController {
 
-    BookService bookService;
-
-    @Autowired
-    public BookController(BookService bookService) {
-        this.bookService = bookService;
-    }
+    private final BookService bookService;
 
     @GetMapping
     public ResponseEntity<List<BookDto>> getBooks(

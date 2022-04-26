@@ -1,4 +1,4 @@
-package com.getir.readingisgood.response;
+package com.getir.readingisgood.model.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

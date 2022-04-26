@@ -1,9 +1,9 @@
 package com.getir.readingisgood.controller;
 
 import com.getir.readingisgood.dto.CustomerDto;
-import com.getir.readingisgood.request.CustomerCreateRequest;
+import com.getir.readingisgood.model.request.CustomerCreateRequest;
 import com.getir.readingisgood.service.CustomerService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,14 +13,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/customer")
+@RequiredArgsConstructor
 public class CustomerController {
 
-    CustomerService customerService;
-
-    @Autowired
-    public CustomerController(CustomerService customerService) {
-        this.customerService = customerService;
-    }
+    private final CustomerService customerService;
 
     @GetMapping
     public ResponseEntity<List<CustomerDto>> getCustomers(

@@ -4,19 +4,18 @@ import com.getir.readingisgood.enums.OrderStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
+import lombok.ToString;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @Entity
-//@Table(name = "order")
+@Table(name = "orders")
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
-public class Orders implements Serializable {
+public class Order extends BaseEntity {
 
     @Id
     @GeneratedValue
@@ -41,8 +40,4 @@ public class Orders implements Serializable {
 
     @Column(name = "price")
     private BigDecimal price;
-
-    @CreationTimestamp
-    private LocalDateTime createDateTime;
-
 }

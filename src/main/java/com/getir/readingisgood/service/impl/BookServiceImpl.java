@@ -4,9 +4,10 @@ import com.getir.readingisgood.dto.BookDto;
 import com.getir.readingisgood.entity.Book;
 import com.getir.readingisgood.enums.ErrorMessages;
 import com.getir.readingisgood.exception.ApiException;
+import com.getir.readingisgood.model.request.BookCreateRequest;
 import com.getir.readingisgood.repository.BookRepository;
-import com.getir.readingisgood.request.BookCreateRequest;
 import com.getir.readingisgood.service.BookService;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -21,14 +22,11 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
     private final Logger logger = LoggerFactory.getLogger(BookServiceImpl.class);
 
-    BookRepository bookRepository;
-
-    public BookServiceImpl(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
-    }
+    private final BookRepository bookRepository;
 
     @Override
     @Transactional

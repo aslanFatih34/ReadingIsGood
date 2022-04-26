@@ -1,6 +1,6 @@
 package com.getir.readingisgood.exception;
 
-import com.getir.readingisgood.response.ErrorMessage;
+import com.getir.readingisgood.model.response.ErrorMessage;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

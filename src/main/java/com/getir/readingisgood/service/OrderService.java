@@ -1,6 +1,6 @@
 package com.getir.readingisgood.service;
 
-import com.getir.readingisgood.request.OrderCreateRequest;
+import com.getir.readingisgood.model.request.OrderCreateRequest;
 
 public interface OrderService {
 

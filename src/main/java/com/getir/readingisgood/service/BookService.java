@@ -1,7 +1,7 @@
 package com.getir.readingisgood.service;
 
 import com.getir.readingisgood.dto.BookDto;
-import com.getir.readingisgood.request.BookCreateRequest;
+import com.getir.readingisgood.model.request.BookCreateRequest;
 
 import java.util.List;
 

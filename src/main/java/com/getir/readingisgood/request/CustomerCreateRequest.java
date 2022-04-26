@@ -22,4 +22,12 @@ public class CustomerCreateRequest {
     @NotBlank
     private String address;
 
+    @Override
+    public String toString() {
+        return "CustomerCreateRequest{" +
+                "name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

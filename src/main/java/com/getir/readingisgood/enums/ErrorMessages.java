@@ -4,6 +4,9 @@ import org.springframework.http.HttpStatus;
 
 public enum ErrorMessages {
     CUSTOMER_COULD_NOT_FOUND("Customer could not be found.", HttpStatus.BAD_REQUEST),
+    BOOK_COULD_NOT_FOUND("Book could not be found.", HttpStatus.BAD_REQUEST),
+    BOOK_ALREADY_EXISTS("Book already exists.", HttpStatus.BAD_REQUEST),
+
     EMAIL_ALREADY_EXISTS("Email already exists.", HttpStatus.BAD_REQUEST);
 
     private String message;

@@ -11,6 +11,7 @@ public class CustomerDto {
 
     private String customerId;
     private String name;
+    private String lastName;
     private String email;
-    private String encryptedPassword;
+    private String address;
 }

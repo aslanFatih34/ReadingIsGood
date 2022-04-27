@@ -5,7 +5,7 @@ This project is prepared for Getir. During the project, a structure where users 
 
 ## Requirements and Tech Stack
 
-Java 11, Spring, Spring Boot, Hibernate, JUnit for development and run.
+Docker, Java 11, Spring, Spring Boot, Hibernate, JUnit for development and run.
 
 ## API Details
 Project has 4 controller and there are Customer, Book, Order and Statistics Controller.

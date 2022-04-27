@@ -9,7 +9,7 @@ public interface CustomerService {
 
     CustomerDto createCustomer(CustomerCreateRequest customerCreateRequest);
 
-    CustomerDto getCustomer(String customerId);
+    CustomerDto getCustomerByCustomerId(String customerId);
 
     List<CustomerDto> getCustomers(int page, int limit);
 

@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.info.Info;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/statistics")
 @RequiredArgsConstructor
+@Slf4j
 @OpenAPIDefinition(info = @Info(
         title = "Getir API",
         version = "v1"
@@ -28,7 +30,8 @@ public class StatisticsController {
 
     @GetMapping(path = "/{customerId}")
     @Operation(summary = "Get statistics list by customer uuid")
-    public ResponseEntity<List<StatisticDto>> getCustomers(@PathVariable String customerId) {
+    public ResponseEntity<List<StatisticDto>> getStatistics(@PathVariable String customerId) {
+        log.info("getStatistics called.CustomerId {} ", customerId);
         List<StatisticDto> statisticDtos = orderService.getStatistics(customerId);
         return ResponseEntity.status(HttpStatus.OK).body(statisticDtos);
     }

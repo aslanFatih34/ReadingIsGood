@@ -1,17 +1,15 @@
 package com.getir.readingisgood.model.request;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
-@NoArgsConstructor
+@AllArgsConstructor
 @ToString
+@Builder
 public class OrderCreateRequest {
     @NotBlank
     private String bookName;

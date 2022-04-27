@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.info.Info;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/order")
 @RequiredArgsConstructor
+@Slf4j
 @OpenAPIDefinition(info = @Info(
         title = "Getir API",
         version = "v1"
@@ -30,6 +32,7 @@ public class OrderController {
     public ResponseEntity<String> createOrder(
             @PathVariable String customerId,
             @Valid @RequestBody OrderCreateRequest orderCreateRequest) {
+        log.info("createOrder called.{} CustomerId {}", orderCreateRequest, customerId);
         String response = orderService.createOrder(customerId, orderCreateRequest);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
@@ -37,6 +40,7 @@ public class OrderController {
     @GetMapping(path = "/{orderId}")
     @Operation(summary = "Get order by given uuid")
     public ResponseEntity<OrderDto> getOrderByOrderId(@PathVariable String orderId) {
+        log.info("getOrderByOrderId called.OrderId {} ", orderId);
         OrderDto orderDto = orderService.getOrderByOrderId(orderId);
         return ResponseEntity.status(HttpStatus.OK).body(orderDto);
     }
@@ -46,6 +50,7 @@ public class OrderController {
     public ResponseEntity<List<OrderDto>> getOrders(
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "limit", defaultValue = "5") int limit) {
+        log.info("getOrders called.Page {} Limit {}", page, limit);
         List<OrderDto> orderDtos = orderService.getOrders(page, limit);
         return ResponseEntity.status(HttpStatus.OK).body(orderDtos);
     }

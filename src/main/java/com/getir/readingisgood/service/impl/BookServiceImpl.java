@@ -8,8 +8,7 @@ import com.getir.readingisgood.model.request.BookCreateRequest;
 import com.getir.readingisgood.repository.BookRepository;
 import com.getir.readingisgood.service.BookService;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,15 +22,15 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class BookServiceImpl implements BookService {
-    private final Logger logger = LoggerFactory.getLogger(BookServiceImpl.class);
 
     private final BookRepository bookRepository;
 
     @Override
     @Transactional
     public BookDto createBook(BookCreateRequest bookCreateRequest) {
-        logger.info("createProduct is started." + bookCreateRequest);
+        log.info("createBook is started.{}", bookCreateRequest);
 
         Optional<Book> book = bookRepository.findByName(bookCreateRequest.getName());
 
@@ -46,7 +45,7 @@ public class BookServiceImpl implements BookService {
 
             BookDto bookDto = new BookDto();
             BeanUtils.copyProperties(storedBook, bookDto);
-            logger.info("createProduct is ended." + storedBook);
+            log.info("createBook is ended.{}", storedBook);
 
             return bookDto;
         }
@@ -54,7 +53,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto getBookByBookId(String bookId) {
-        logger.info("getBookByBookId is started.BookId " + bookId);
+        log.info("getBookByBookId is started.BookId {}", bookId);
 
         Optional<Book> book = bookRepository.findByBookId(bookId);
 
@@ -64,14 +63,14 @@ public class BookServiceImpl implements BookService {
             BookDto bookDto = new BookDto();
             BeanUtils.copyProperties(book.get(), bookDto);
 
-            logger.info("getBookByBookId is ended." + book);
+            log.info("getBookByBookId is ended.{}", book.get());
             return bookDto;
         }
     }
 
     @Override
     public List<BookDto> getBooks(int page, int limit) {
-        logger.info("getBooks are started.Page " + page + " Limit " + limit);
+        log.info("getBooks is started.Page {} Limit {}", page, limit);
 
         Page<Book> pageBooks = bookRepository.findAll(PageRequest.of(page, limit));
         List<Book> books = pageBooks.getContent();
@@ -84,7 +83,7 @@ public class BookServiceImpl implements BookService {
             bookDtos.add(bookDto);
         }
 
-        logger.info("getBooks are ended.Size :" + bookDtos.size());
+        log.info("getBooks are ended.Size {} ", bookDtos.size());
         return bookDtos;
     }
 }

@@ -119,6 +119,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<StatisticDto> getStatistics(String customerId) {
+        log.info("getStatistics is started.CustomerId {}", customerId);
+
         List<Order> orders = orderRepository.findAllByCustomerOrderByCreatedDateAsc(customerId);
         List<StatisticDto> statisticDtos = new ArrayList<>();
 
@@ -139,6 +141,7 @@ public class OrderServiceImpl implements OrderService {
         });
 
         statisticDtos.sort(Comparator.comparing(StatisticDto::getMonth));
+        log.info("getStatistics are ended.Size {} ", statisticDtos.size());
         return statisticDtos;
     }
 

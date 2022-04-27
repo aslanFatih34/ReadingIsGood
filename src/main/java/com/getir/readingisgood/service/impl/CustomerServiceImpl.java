@@ -7,6 +7,7 @@ import com.getir.readingisgood.exception.ApiException;
 import com.getir.readingisgood.model.request.CustomerCreateRequest;
 import com.getir.readingisgood.repository.CustomerRepository;
 import com.getir.readingisgood.service.CustomerService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,6 +21,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@Slf4j
 public class CustomerServiceImpl implements CustomerService {
 
     CustomerRepository customerRepository;
@@ -33,6 +35,8 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDto createCustomer(CustomerCreateRequest customerCreateRequest) {
+        log.info("createCustomer is started.{}", customerCreateRequest);
+
         Optional<Customer> customer = customerRepository.findByEmail(customerCreateRequest.getEmail());
         if (customer.isPresent()) {
             throw new ApiException(ErrorMessages.EMAIL_ALREADY_EXISTS);
@@ -48,12 +52,14 @@ public class CustomerServiceImpl implements CustomerService {
             CustomerDto customerDto = new CustomerDto();
             BeanUtils.copyProperties(storedCustomer, customerDto);
 
+            log.info("createCustomer is ended.{}", storedCustomer);
             return customerDto;
         }
     }
 
     @Override
-    public CustomerDto getCustomer(String customerId) {
+    public CustomerDto getCustomerByCustomerId(String customerId) {
+        log.info("getCustomerByCustomerId is started.CustomerId {}", customerId);
         Optional<Customer> customer = customerRepository.findByCustomerId(customerId);
 
         if (customer.isEmpty()) {
@@ -62,12 +68,14 @@ public class CustomerServiceImpl implements CustomerService {
             CustomerDto customerDto = new CustomerDto();
             BeanUtils.copyProperties(customer.get(), customerDto);
 
+            log.info("getCustomerByCustomerId is ended.{}", customer.get());
             return customerDto;
         }
     }
 
     @Override
     public List<CustomerDto> getCustomers(int page, int limit) {
+        log.info("getCustomers is started.Page {} Limit {}", page, limit);
 
         Page<Customer> pageCustomers = customerRepository.findAll(PageRequest.of(page, limit));
         List<Customer> customers = pageCustomers.getContent();
@@ -80,6 +88,7 @@ public class CustomerServiceImpl implements CustomerService {
             customerDtos.add(customerDto);
         }
 
+        log.info("getBooks are ended.Size {} ", customerDtos.size());
         return customerDtos;
     }
 }
